@@ -13,6 +13,7 @@ gulp.task("server", function () {
   });
 
   gulp.watch("*.html", gulp.series("refresh"));
+  gulp.watch("js/*.js", gulp.series("refresh"));
 });
 
 gulp.task("refresh", function (done) {
