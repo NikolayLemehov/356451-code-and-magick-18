@@ -817,6 +817,7 @@ window.Game = (function () {
 
     game.initializeLevelAndStart();
     game.setGameStatus(Verdict.INTRO);
+    // game.setGameStatus(Verdict.WIN);
   };
 
   window.restartGame('img/wizard.gif', 'img/wizard-reversed.gif');
