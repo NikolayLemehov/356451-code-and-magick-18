@@ -54,9 +54,8 @@ var randomElementArray = function (array) {
 };
 var randomWizards = function (names, surnames, coatColors, eyesColors, quantityWizard) {
   var wizards = [];
-  var wizard = {};
   for (var i = 0; i < quantityWizard; i++) {
-    wizard = {
+    var wizard = {
       name: randomElementArray(names) + ' ' + randomElementArray(surnames),
       coatColor: randomElementArray(coatColors),
       eyesColor: randomElementArray(eyesColors)
