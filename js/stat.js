@@ -13,6 +13,7 @@ var MARGIN_LEFT_DIAGRAM = 40;
 var BLACK_COLOR = 'rgba(0, 0, 0, 1)';
 var TRANSPARENT_BLACK_COLOR = 'rgba(0, 0, 0, 0.7)';
 var WHITE_COLOR = '#ffffff';
+var RED_COLOR = 'rgba(255, 0, 0, 1)';
 var HSL_HUE_OTHER_PLAYER = 240;
 
 var renderCloud = function (ctx, x, y, color) {
@@ -22,13 +23,11 @@ var renderCloud = function (ctx, x, y, color) {
 
 var getMaxElement = function (arr) {
   var maxElement = arr[0];
-
   for (var i = 0; i < arr.length; i++) {
     if (arr[i] > maxElement) {
       maxElement = arr[i];
     }
   }
-
   return maxElement;
 };
 
@@ -57,7 +56,7 @@ window.renderStatistics = function (ctx, players, times) {
     heightBar = times[i] * MAX_BAR_HEIGHT / maxTime;
     barY = bottomCloud - heightBar - 40;
     if (players[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+      ctx.fillStyle = RED_COLOR;
     } else {
       ctx.fillStyle = getRandomColor(HSL_HUE_OTHER_PLAYER);
     }
