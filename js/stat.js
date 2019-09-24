@@ -11,6 +11,8 @@ var MAX_BAR_HEIGHT = 140;
 var SPACE_BETWEEN_COLUMN = 50;
 var MARGIN_LEFT_DIAGRAM = 40;
 var BLACK_COLOR = 'rgba(0, 0, 0, 1)';
+var TRANSPARENT_BLACK_COLOR = 'rgba(0, 0, 0, 0.7)';
+var WHITE_COLOR = '#ffffff';
 var HSL_HUE_OTHER_PLAYER = 240;
 
 var renderCloud = function (ctx, x, y, color) {
@@ -35,10 +37,10 @@ var getRandomColor = function (hslHue) {
 };
 
 window.renderStatistics = function (ctx, players, times) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
+  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, TRANSPARENT_BLACK_COLOR);
+  renderCloud(ctx, CLOUD_X, CLOUD_Y, WHITE_COLOR);
 
-  ctx.fillStyle = '#000';
+  ctx.fillStyle = BLACK_COLOR;
   ctx.font = '16px PT Mono';
   ctx.textBaseline = 'hanging';
   ctx.fillText('Ура вы победили!', CLOUD_X + FONT_GAP, CLOUD_Y + FONT_GAP);
