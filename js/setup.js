@@ -53,10 +53,8 @@ var similarListElement = setupElement.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content
   .querySelector('.setup-similar-item');
 var setupOpenBtn = document.querySelector('.setup-open');
-// var setupWizardFormElement = setupElement.querySelector('.setup-wizard-form');
 var setupCloseBtn = setupElement.querySelector('.setup-close');
 var setupUserNameInput = setupElement.querySelector('.setup-user-name');
-// var setupSubmitBtn = setupElement.querySelector('.setup-submit');
 var setupWizardCoatElement = setupElement.querySelector('.setup-wizard .wizard-coat');
 var setupWizardEyesElement = setupElement.querySelector('.setup-wizard .wizard-eyes');
 var setupFireballElement = setupElement.querySelector('.setup-fireball-wrap');
@@ -64,25 +62,6 @@ var setupFireballElement = setupElement.querySelector('.setup-fireball-wrap');
 var randomElementArray = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
-
-// var convertWordColorToRgbInArray = function (colors) {
-//   var bodyElement = document.querySelector('body');
-//   var color = '';
-//   var element = document.createElement('div');
-//   element.classList.add('temporary-test-element');
-//   element.style.display = 'none';
-//   bodyElement.appendChild(element);
-//   for (var i = 0; i < colors.length; i++) {
-//     element.style.fill = colors[i];
-//     color = getComputedStyle(element).fill;
-//     colors[i] = color;
-//   }
-//   element.remove();
-//   return colors;
-// };
-
-// convertWordColorToRgbInArray(EYES_COLORS);
-// convertWordColorToRgbInArray(FIREBALL_COLORS);
 
 var randomWizards = function () {
   var wizards = [];
@@ -125,11 +104,6 @@ var closePopupSetup = function () {
   document.removeEventListener('keydown', pressEscSetupPopupHandler);
 };
 
-// var submitSetupWizardForm = function () {
-//   setupWizardFormElement.submit;
-//   closePopupSetup();
-// };
-
 var pressEscSetupPopupHandler = function (evt) {
   if (evt.keyCode === ESC_KEYCODE && evt.target !== setupUserNameInput) {
     closePopupSetup();
@@ -156,16 +130,6 @@ setupCloseBtn.addEventListener('keydown', function (evt) {
   }
 });
 
-// setupSubmitBtn.addEventListener('keydown', function (evt) {
-//   if (evt.keyCode === ENTER_KEYCODE && evt.target !== setupSubmitBtn) {
-//     submitSetupWizardForm();
-//   }
-// });
-
-// if !setupElement.classList.contains('hidden') {
-//
-// }
-
 var getNextRandomItemArray = function (presentItem, array) {
   var color = randomElementArray(array);
   if (presentItem === color) {
@@ -173,15 +137,6 @@ var getNextRandomItemArray = function (presentItem, array) {
   }
   return color;
 };
-
-// var getNextItemArray = function (presentItem, array) {
-//   for (var i = 0; i < array.length; i++) {
-//     if (presentItem === array[i] && i < array.length - 1) {
-//       return array[i + 1];
-//     }
-//   }
-//   return array[0];
-// };
 
 setupWizardCoatElement.addEventListener('click', function () {
   var color = getNextRandomItemArray(getComputedStyle(setupWizardCoatElement).fill, COAT_COLORS);
