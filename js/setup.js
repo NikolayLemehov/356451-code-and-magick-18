@@ -42,7 +42,7 @@
     'rgb(255, 0, 0)',
     'rgb(0, 0, 255)',
     'rgb(255, 255, 0)',
-    'rgb(0, 128, 0)'
+    'rgb(0, 128, 0)',
   ];
   var FIREBALL_COLORS = [
     '#ee4830',
@@ -161,32 +161,37 @@
     return copyArray;
   };
 
-  var getNextItemArray = function (presentItem, array) {
-    var translateArray = toCopyArray(array);
+  var getNextItemArray = function (presentItem, array, rgbArray) {
     for (var i = 0; i < array.length; i++) {
-      if (presentItem === translateArray[i] && i < array.length - 1) {
-        return array[i + 1];
+      if (presentItem === rgbArray[i] && i < array.length - 1) {
+        return {
+          color: array[i + 1],
+          rgbColor: rgbArray[i + 1],
+        };
       }
     }
-    return array[0];
+    return {
+      color: array[0],
+      rgbColor: rgbArray[0],
+    };
   };
 
   setupWizardCoatElement.addEventListener('click', function () {
-    var color = getNextItemArray(getComputedStyle(setupWizardCoatElement).fill, COAT_COLORS);
-    setupWizardCoatElement.style.fill = color;
-    setupElement.querySelector('.setup-wizard-form input[name="coat-color"]').value = color;
+    var colorPair = getNextItemArray(getComputedStyle(setupWizardCoatElement).fill, COAT_COLORS, toCopyArray(COAT_COLORS));
+    setupWizardCoatElement.style.fill = colorPair.rgbColor;
+    setupElement.querySelector('.setup-wizard-form input[name="coat-color"]').value = colorPair.color;
   });
 
   setupWizardEyesElement.addEventListener('click', function () {
-    var color = getNextItemArray(getComputedStyle(setupWizardEyesElement).fill, RGB_EYES_COLORS);
-    setupWizardEyesElement.style.fill = color;
-    setupElement.querySelector('.setup-wizard-form input[name="eyes-color"]').value = color;
+    var colorPair = getNextItemArray(getComputedStyle(setupWizardEyesElement).fill, EYES_COLORS, RGB_EYES_COLORS);
+    setupWizardEyesElement.style.fill = colorPair.rgbColor;
+    setupElement.querySelector('.setup-wizard-form input[name="eyes-color"]').value = colorPair.color;
   });
 
   setupFireballElement.addEventListener('click', function () {
-    var color = getNextItemArray(getComputedStyle(setupFireballElement).backgroundColor, rgbFireballColors);
-    setupFireballElement.style.backgroundColor = color;
-    setupFireballElement.querySelector('input').value = color;
+    var colorPair = getNextItemArray(getComputedStyle(setupFireballElement).backgroundColor, FIREBALL_COLORS, rgbFireballColors);
+    setupFireballElement.style.backgroundColor = colorPair.rgbColor;
+    setupFireballElement.querySelector('input').value = colorPair.color;
   });
 
   similarElement.classList.remove('hidden');
