@@ -52,47 +52,23 @@
     '#e6e848',
   ];
   var QUANTITY_PERSON = 4;
+  var rgbFireballColors = window.util.hexToRgbArray(FIREBALL_COLORS);
 
-  var hexToRgb = function (hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? 'rgb(' + parseInt(result[1], 16) +
-      ', ' + parseInt(result[2], 16) +
-      ', ' + parseInt(result[3], 16) + ')' : null;
-  };
-
-  var hexToRgbArray = function (hexArray) {
-    var rbgArray = [];
-    for (var i = 0; i < hexArray.length; i++) {
-      rbgArray[i] = hexToRgb(hexArray[i]);
-    }
-    return rbgArray;
-  };
-
-  var rgbFireballColors = hexToRgbArray(FIREBALL_COLORS);
-
-  var setupElement = document.querySelector('.setup');
-  var similarElement = setupElement.querySelector('.setup-similar');
-  var similarListElement = setupElement.querySelector('.setup-similar-list');
+  var similarElement = window.elementDom.setup.querySelector('.setup-similar');
+  var similarListElement = window.elementDom.setup.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content
     .querySelector('.setup-similar-item');
-  var setupOpenBtn = document.querySelector('.setup-open');
-  var setupCloseBtn = setupElement.querySelector('.setup-close');
-  var setupUserNameInput = setupElement.querySelector('.setup-user-name');
-  var setupWizardCoatElement = setupElement.querySelector('.setup-wizard .wizard-coat');
-  var setupWizardEyesElement = setupElement.querySelector('.setup-wizard .wizard-eyes');
-  var setupFireballElement = setupElement.querySelector('.setup-fireball-wrap');
-
-  var randomElementArray = function (array) {
-    return array[Math.floor(Math.random() * array.length)];
-  };
+  var setupWizardCoatElement = window.elementDom.setup.querySelector('.setup-wizard .wizard-coat');
+  var setupWizardEyesElement = window.elementDom.setup.querySelector('.setup-wizard .wizard-eyes');
+  var setupFireballElement = window.elementDom.setup.querySelector('.setup-fireball-wrap');
 
   var randomWizards = function () {
     var wizards = [];
     for (var i = 0; i < QUANTITY_PERSON; i++) {
       var wizard = {
-        name: randomElementArray(NAMES) + ' ' + randomElementArray(SURNAMES),
-        coatColor: randomElementArray(COAT_COLORS),
-        eyesColor: randomElementArray(EYES_COLORS),
+        name: window.util.randomElementArray(NAMES) + ' ' + window.util.randomElementArray(SURNAMES),
+        coatColor: window.util.randomElementArray(COAT_COLORS),
+        eyesColor: window.util.randomElementArray(EYES_COLORS),
       };
       wizards.push(wizard);
     }
@@ -117,50 +93,6 @@
     similarListElement.appendChild(fragment);
   };
 
-  var openPopupSetup = function () {
-    setupElement.classList.remove('hidden');
-    document.addEventListener('keydown', pressEscSetupPopupHandler);
-  };
-
-  var closePopupSetup = function () {
-    setupElement.classList.add('hidden');
-    document.removeEventListener('keydown', pressEscSetupPopupHandler);
-  };
-
-  var pressEscSetupPopupHandler = function (evt) {
-    if (evt.keyCode === window.util.ESC_KEYCODE && evt.target !== setupUserNameInput) {
-      closePopupSetup();
-    }
-  };
-
-  setupOpenBtn.addEventListener('click', function () {
-    openPopupSetup();
-  });
-
-  setupOpenBtn.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.ENTER_KEYCODE) {
-      openPopupSetup();
-    }
-  });
-
-  setupCloseBtn.addEventListener('click', function () {
-    closePopupSetup();
-  });
-
-  setupCloseBtn.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.ENTER_KEYCODE) {
-      closePopupSetup();
-    }
-  });
-
-  var toCopyArray = function (array) {
-    var copyArray = [];
-    for (var i = 0; i < array.length; i++) {
-      copyArray[i] = array[i];
-    }
-    return copyArray;
-  };
-
   var getNextItemArray = function (presentItem, array, rgbArray) {
     for (var i = 0; i < array.length; i++) {
       if (presentItem === rgbArray[i] && i < array.length - 1) {
@@ -177,15 +109,15 @@
   };
 
   setupWizardCoatElement.addEventListener('click', function () {
-    var colorPair = getNextItemArray(getComputedStyle(setupWizardCoatElement).fill, COAT_COLORS, toCopyArray(COAT_COLORS));
+    var colorPair = getNextItemArray(getComputedStyle(setupWizardCoatElement).fill, COAT_COLORS, window.util.toCopyArray(COAT_COLORS));
     setupWizardCoatElement.style.fill = colorPair.rgbColor;
-    setupElement.querySelector('.setup-wizard-form input[name="coat-color"]').value = colorPair.color;
+    window.elementDom.setup.querySelector('.setup-wizard-form input[name="coat-color"]').value = colorPair.color;
   });
 
   setupWizardEyesElement.addEventListener('click', function () {
     var colorPair = getNextItemArray(getComputedStyle(setupWizardEyesElement).fill, EYES_COLORS, RGB_EYES_COLORS);
     setupWizardEyesElement.style.fill = colorPair.rgbColor;
-    setupElement.querySelector('.setup-wizard-form input[name="eyes-color"]').value = colorPair.color;
+    window.elementDom.setup.querySelector('.setup-wizard-form input[name="eyes-color"]').value = colorPair.color;
   });
 
   setupFireballElement.addEventListener('click', function () {

@@ -12,6 +12,29 @@
         }
       }
       return maxElement;
+    },
+    randomElementArray: function (array) {
+      return array[Math.floor(Math.random() * array.length)];
+    },
+    toCopyArray: function (array) {
+      var copyArray = [];
+      for (var i = 0; i < array.length; i++) {
+        copyArray[i] = array[i];
+      }
+      return copyArray;
+    },
+    hexToRgb: function (hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? 'rgb(' + parseInt(result[1], 16) +
+        ', ' + parseInt(result[2], 16) +
+        ', ' + parseInt(result[3], 16) + ')' : null;
+    },
+    hexToRgbArray: function (hexArray) {
+      var rbgArray = [];
+      for (var i = 0; i < hexArray.length; i++) {
+        rbgArray[i] = this.hexToRgb(hexArray[i]);
+      }
+      return rbgArray;
     }
   };
 })();
