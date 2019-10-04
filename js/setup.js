@@ -128,10 +128,10 @@
   });
 
   formElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
     window.backend.save(new FormData(formElement), errorHandler, function () {
       window.elementDom.setup.classList.add('hidden');
     });
-    evt.preventDefault();
   });
 
   var successHandler = function (wizards) {
