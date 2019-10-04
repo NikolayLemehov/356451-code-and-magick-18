@@ -1,27 +1,27 @@
 'use strict';
 
 (function () {
-  var NAMES = [
-    'Иван',
-    'Иван',
-    'Хуан Себастьян',
-    'Мария',
-    'Кристоф',
-    'Виктор',
-    'Юлия',
-    'Люпита',
-    'Вашингтон',
-  ];
-  var SURNAMES = [
-    'да Марья',
-    'Верон',
-    'Мирабелла',
-    'Вальц',
-    'Онопко',
-    'Топольницкая',
-    'Нионго',
-    'Ирвинг',
-  ];
+  // var NAMES = [
+  //   'Иван',
+  //   'Иван',
+  //   'Хуан Себастьян',
+  //   'Мария',
+  //   'Кристоф',
+  //   'Виктор',
+  //   'Юлия',
+  //   'Люпита',
+  //   'Вашингтон',
+  // ];
+  // var SURNAMES = [
+  //   'да Марья',
+  //   'Верон',
+  //   'Мирабелла',
+  //   'Вальц',
+  //   'Онопко',
+  //   'Топольницкая',
+  //   'Нионго',
+  //   'Ирвинг',
+  // ];
   var COAT_COLORS = [
     'rgb(101, 137, 164)',
     'rgb(241, 43, 107)',
@@ -54,34 +54,35 @@
   var QUANTITY_PERSON = 4;
   var rgbFireballColors = window.util.hexToRgbArray(FIREBALL_COLORS);
 
-  var similarElement = window.elementDom.setup.querySelector('.setup-similar');
-  var similarListElement = window.elementDom.setup.querySelector('.setup-similar-list');
+  // var similarElement = window.elementDom.setup.querySelector('.setup-similar');
+  var formElement = window.elementDom.setup.querySelector('.setup-wizard-form');
+  var similarListElement = formElement.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content
     .querySelector('.setup-similar-item');
-  var setupWizardCoatElement = window.elementDom.setup.querySelector('.setup-wizard .wizard-coat');
-  var setupWizardEyesElement = window.elementDom.setup.querySelector('.setup-wizard .wizard-eyes');
-  var setupFireballElement = window.elementDom.setup.querySelector('.setup-fireball-wrap');
+  var setupWizardCoatElement = formElement.querySelector('.setup-wizard .wizard-coat');
+  var setupWizardEyesElement = formElement.querySelector('.setup-wizard .wizard-eyes');
+  var setupFireballElement = formElement.querySelector('.setup-fireball-wrap');
 
-  var randomWizards = function () {
-    var wizards = [];
-    for (var i = 0; i < QUANTITY_PERSON; i++) {
-      var wizard = {
-        name: window.util.randomElementArray(NAMES) + ' ' + window.util.randomElementArray(SURNAMES),
-        coatColor: window.util.randomElementArray(COAT_COLORS),
-        eyesColor: window.util.randomElementArray(EYES_COLORS),
-      };
-      wizards.push(wizard);
-    }
-    return wizards;
-  };
+  // var randomWizards = function () {
+  //   var wizards = [];
+  //   for (var i = 0; i < QUANTITY_PERSON; i++) {
+  //     var wizard = {
+  //       name: window.util.randomElementArray(NAMES) + ' ' + window.util.randomElementArray(SURNAMES),
+  //       coatColor: window.util.randomElementArray(COAT_COLORS),
+  //       eyesColor: window.util.randomElementArray(EYES_COLORS),
+  //     };
+  //     wizards.push(wizard);
+  //   }
+  //   return wizards;
+  // };
 
-  var wizards = randomWizards();
+  // var wizards = randomWizards();
 
   var renderWizard = function (data) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
     wizardElement.querySelector('.setup-similar-label').textContent = data.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = data.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = data.eyesColor;
+    wizardElement.querySelector('.wizard-coat').style.fill = data.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = data.colorEyes;
     return wizardElement;
   };
 
@@ -126,6 +127,30 @@
     setupFireballElement.querySelector('input').value = colorPair.color;
   });
 
-  similarElement.classList.remove('hidden');
-  appendWizards(wizards);
+  formElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(formElement), errorHandler, function () {
+      window.elementDom.setup.classList.add('hidden');
+    });
+  });
+
+  var successHandler = function (wizards) {
+    appendWizards(wizards.slice(0, QUANTITY_PERSON));
+    window.elementDom.setup.querySelector('.setup-similar').classList.remove('hidden');
+  };
+
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style.cssText = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = '0';
+    node.style.right = '0';
+    node.style.fontSize = '30px';
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  // similarElement.classList.remove('hidden');
+  // appendWizards(wizards);
+  window.backend.load(errorHandler, successHandler);
 })();
