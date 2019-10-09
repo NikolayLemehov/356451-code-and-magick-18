@@ -63,21 +63,6 @@
   var setupWizardEyesElement = formElement.querySelector('.setup-wizard .wizard-eyes');
   var setupFireballElement = formElement.querySelector('.setup-fireball-wrap');
 
-  // var randomWizards = function () {
-  //   var wizards = [];
-  //   for (var i = 0; i < QUANTITY_PERSON; i++) {
-  //     var wizard = {
-  //       name: window.util.randomElementArray(NAMES) + ' ' + window.util.randomElementArray(SURNAMES),
-  //       coatColor: window.util.randomElementArray(COAT_COLORS),
-  //       eyesColor: window.util.randomElementArray(EYES_COLORS),
-  //     };
-  //     wizards.push(wizard);
-  //   }
-  //   return wizards;
-  // };
-
-  // var wizards = randomWizards();
-
   var renderWizard = function (data) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
     wizardElement.querySelector('.setup-similar-label').textContent = data.name;
