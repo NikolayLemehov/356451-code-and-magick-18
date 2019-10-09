@@ -141,11 +141,8 @@
 
   var errorHandler = function (errorMessage) {
     var node = document.createElement('div');
-    node.style.cssText = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = '0';
-    node.style.right = '0';
-    node.style.fontSize = '30px';
+    node.style.cssText = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red; position: absolute;' +
+      ' left: 0; right: 0; font-size: 30px;';
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
   };
