@@ -35,6 +35,20 @@
         rbgArray[i] = this.hexToRgb(hexArray[i]);
       }
       return rbgArray;
-    }
+    },
+    getNextItemArray: function (presentItem, array, rgbArray) {
+      for (var i = 0; i < array.length; i++) {
+        if (presentItem === rgbArray[i] && i < array.length - 1) {
+          return {
+            color: array[i + 1],
+            rgbColor: rgbArray[i + 1],
+          };
+        }
+      }
+      return {
+        color: array[0],
+        rgbColor: rgbArray[0],
+      };
+    },
   };
 })();
